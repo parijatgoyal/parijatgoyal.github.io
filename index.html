@@ -7,206 +7,205 @@
     <body>
         <p>
             #include <stdio.h>
-#include <stdlib.h>
-
-// Function to dynamically allocate a 2D int array
-int** allocate_array(int M, int N) {
-    int** array = (int**)malloc(M * sizeof(int*));
-    for (int i = 0; i < M; i++) {
-        array[i] = (int*)malloc(N * sizeof(int));
-    }
-    return array;
-}
-
-// Function to read an image from user input
-void read_image(int*** image, int* row_size, int* column_size) {
-    // Read the row size and column size of the image
-    printf("Enter the row size of the image: ");
-    scanf("%d", row_size);
-    printf("Enter the column size of the image: ");
-    scanf("%d", column_size);
-
-    // Allocate memory for the image
-    *image = allocate_array(*row_size, *column_size);
-
-    // Read the image data
-    printf("Enter the image data (0 or 1):\n");
-    for (int i = 0; i < *row_size; i++) {
-        for (int j = 0; j < *column_size; j++) {
-            scanf("%d", &((*image)[i][j]));
-        }
-    }
-}
-
-// Function to print the content of an image
-void print_image(int** image, int row_size, int column_size) {
-    printf("Image content:\n");
-    for (int i = 0; i < row_size; i++) {
-        for (int j = 0; j < column_size; j++) {
-            printf("%d ", image[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-// Function to get the boundary image
-int** get_boundary_image(int** image, int row_size, int column_size) {
-    int** boundary_image = allocate_array(row_size, column_size);
-
-    for (int i = 0; i < row_size; i++) {
-        for (int j = 0; j < column_size; j++) {
-            if (image[i][j] == 1) {
-                // Check if any neighbor is a background point
-                if ((i > 0 && image[i - 1][j] == 0) ||
-                    (i < row_size - 1 && image[i + 1][j] == 0) ||
-                    (j > 0 && image[i][j - 1] == 0) ||
-                    (j < column_size - 1 && image[i][j + 1] == 0)) {
-                    boundary_image[i][j] = 1; // Object point is a boundary point
-                } else {
-                    boundary_image[i][j] = 0; // Object point is not a boundary point
-                }
-            } else {
-                boundary_image[i][j] = 0; // Background point
-            }
-        }
-    }
-
-    return boundary_image;
-}
-
-int main() {
-    int** image;
-    int** boundary_image;
-    int row_size, column_size;
-
-    // Read the image from user input
-    read_image(&image, &row_size, &column_size);
-
-    // Compute the boundary image
-    boundary_image = get_boundary_image(image, row_size, column_size);
-
-    // Print the input image
-    printf("Input Image:\n");
-    print_image(image, row_size, column_size);
-
-    // Print the boundary image
-    printf("Boundary Image:\n");
-    print_image(boundary_image, row_size, column_size);
-
-    // Deallocate memory for the images
-    for (int i = 0; i < row_size; i++) {
-        free(image[i]);
-        free(boundary_image[i]);
-    }
-    free(image);
-    free(boundary_image);
-
-    return 0;
-}
+<br>#include <stdlib.h>
+<br>
+<br>// Function to dynamically allocate a 2D int array
+<br>int** allocate_array(int M, int N) {
+<br>   int** array = (int**)malloc(M * sizeof(int*));
+<br>  for (int i = 0; i < M; i++) {
+ <br>       array[i] = (int*)malloc(N * sizeof(int));
+ <br>   }
+ <br>   return array;
+<br>}
+<br>
+<br>// Function to read an image from user input
+<br>void read_image(int*** image, int* row_size, int* column_size) {
+  <br>  // Read the row size and column size of the image
+ <br>   printf("Enter the row size of the image: ");
+  <br>  scanf("%d", row_size);
+ <br>   printf("Enter the column size of the image: ");
+ <br>   scanf("%d", column_size);
+<br>
+   <br> // Allocate memory for the image
+ <br>   *image = allocate_array(*row_size, *column_size);
+<br>
+ <br>   // Read the image data
+<br>    printf("Enter the image data (0 or 1):\n");
+<br>    for (int i = 0; i < *row_size; i++) {
+  <br>      for (int j = 0; j < *column_size; j++) {
+  <br>          scanf("%d", &((*image)[i][j]));
+  <br>      }
+ <br>   }
+<br>}
+<br>
+<br>// Function to print the content of an image
+<br>void print_image(int** image, int row_size, int column_size) {
+<br>    printf("Image content:\n");
+  <br>  for (int i = 0; i < row_size; i++) {
+  <br>      for (int j = 0; j < column_size; j++) {
+   <br>         printf("%d ", image[i][j]);
+   <br>     }
+  <br>      printf("\n");
+<br>    }
+<br>}
+<br>
+<br>// Function to get the boundary image
+<br>int** get_boundary_image(int** image, int row_size, int column_size) {
+ <br>   int** boundary_image = allocate_array(row_size, column_size);
+<br>
+ <br>   for (int i = 0; i < row_size; i++) {
+  <br>      for (int j = 0; j < column_size; j++) {
+  <br>          if (image[i][j] == 1) {
+    <br>            // Check if any neighbor is a background point
+    <br>            if ((i > 0 && image[i - 1][j] == 0) ||
+   <br>                 (i < row_size - 1 && image[i + 1][j] == 0) ||
+   <br>                 (j > 0 && image[i][j - 1] == 0) ||
+    <br>                (j < column_size - 1 && image[i][j + 1] == 0)) {
+     <br>               boundary_image[i][j] = 1; // Object point is a boundary point
+    <br>            } else {
+    <br>                boundary_image[i][j] = 0; // Object point is not a boundary point
+      <br>          }
+     <br>       } else {
+      <br>          boundary_image[i][j] = 0; // Background point
+      <br>      }
+     <br>   }
+    <br>}
+<br>
+   <br> return boundary_image;
+<br>}
+<br>
+<br>int main() {
+<br>    int** image;
+ <br>   int** boundary_image;
+ <br>   int row_size, column_size;
+<br>
+  <br>  // Read the image from user input
+ <br>   read_image(&image, &row_size, &column_size);
+<br>
+  <br>  // Compute the boundary image
+ <br>   boundary_image = get_boundary_image(image, row_size, column_size);
+<br>
+  <br>  // Print the input image
+ <br>   printf("Input Image:\n");
+ <br>   print_image(image, row_size, column_size);
+<br>
+  <br>  // Print the boundary image
+ <br>   printf("Boundary Image:\n");
+ <br>   print_image(boundary_image, row_size, column_size);
+<br>
+  <br>  // Deallocate memory for the images
+ <br>   for (int i = 0; i < row_size; i++) {
+  <br>      free(image[i]);
+   <br>     free(boundary_image[i]);
+   <br> }
+  <br>  free(image);
+  <br>  free(boundary_image);
+<br>
+   <br> return 0;
+<br>}
             
-            #include <stdio.h>
-#include <stdlib.h>
+  <br>          #include <stdio.h>
+<br>#include <stdlib.h>
+<br>
+<br>#define MAX_STUDENTS 100
+<br>#define MAX_NAME_LENGTH 50
+<br>
+<br>typedef struct {
+  <br>  int student_no;
+ <br>   int subject_no;
+ <br>   char student[MAX_STUDENTS][MAX_NAME_LENGTH];
+ <br>   int** table;
+<br>} _MARKS;
+<br>
+<br>// Function to dynamically allocate a 2D int array
+<br>int** allocate_array(int M, int N) {
+<br>    int** array = (int**)malloc(M * sizeof(int*));
+ <br>   for (int i = 0; i < M; i++) {
+ <br>       array[i] = (int*)malloc(N * sizeof(int));
+  <br>  }
+  <br>  return array;
+<br>}
+<br>
+<br>// Function to read a table
+<br>void read_table(_MARKS* marks) {
+<br>    // Read the student_no and subject_no
+ <br>   printf("Enter the number of students: ");
+ <br>   scanf("%d", &(marks->student_no));
+ <br>   printf("Enter the number of subjects: ");
+  <br>  scanf("%d", &(marks->subject_no));
+<br>
+ <br>   // Allocate memory for the table
+ <br>   marks->table = allocate_array(marks->student_no, marks->subject_no);
+<br>
+  <br>  // Read the student names and marks
+ <br>   printf("Enter the student names and marks:\n");
+ <br>   for (int i = 0; i < marks->student_no; i++) {
+    <br>    scanf("%s", marks->student[i]);
+  <br>      for (int j = 0; j < marks->subject_no; j++) {
+  <br>          scanf("%d", &(marks->table[i][j]));
+   <br>     }
+  <br>  }
+<br>}
+<br>
+<br>// Function to print a table
+<br>void print_table(_MARKS marks) {
+ <br>   printf("Table content:\n");
+  <br>  for (int i = 0; i < marks.student_no; i++) {
+ <br>       printf("%s ", marks.student[i]);
+ <br>       for (int j = 0; j < marks.subject_no; j++) {
+  <br>          printf("%d ", marks.table[i][j]);
+  <br>      }
+   <br>     printf("\n");
+   <br> }
+<br>}
 
-#define MAX_STUDENTS 100
-#define MAX_NAME_LENGTH 50
+<br>// Function to compute the total marks for each student
+<br>void get_total_marks(_MARKS* marks, _MARKS* total_marks) {
+<br>    total_marks->student_no = marks->student_no;
+ <br>   total_marks->subject_no = marks->subject_no + 1;
+ <br>   for (int i = 0; i < marks->student_no; i++) {
+   <br>     for (int j = 0; j < marks->subject_no; j++) {
+  <br>          if (j == marks->subject_no - 1) {
+     <br>           // Compute the total marks for the student
+     <br>           int total = 0;
+     <br>           for (int k = 0; k < marks->subject_no - 1; k++) {
+      <br>              total += marks->table[i][k];
+      <br>          }
+       <br>         total_marks->table[i][j] = total;
+       <br>     } else {
+        <br>        total_marks->table[i][j] = marks->table[i][j];
+        <br>    }
+       <br> }
+    <br>}
+<br>}
 
-typedef struct {
-    int student_no;
-    int subject_no;
-    char student[MAX_STUDENTS][MAX_NAME_LENGTH];
-    int** table;
-} _MARKS;
-
-// Function to dynamically allocate a 2D int array
-int** allocate_array(int M, int N) {
-    int** array = (int**)malloc(M * sizeof(int*));
-    for (int i = 0; i < M; i++) {
-        array[i] = (int*)malloc(N * sizeof(int));
-    }
-    return array;
-}
-
-// Function to read a table
-void read_table(_MARKS* marks) {
-    // Read the student_no and subject_no
-    printf("Enter the number of students: ");
-    scanf("%d", &(marks->student_no));
-    printf("Enter the number of subjects: ");
-    scanf("%d", &(marks->subject_no));
-
-    // Allocate memory for the table
-    marks->table = allocate_array(marks->student_no, marks->subject_no);
-
-    // Read the student names and marks
-    printf("Enter the student names and marks:\n");
-    for (int i = 0; i < marks->student_no; i++) {
-        scanf("%s", marks->student[i]);
-        for (int j = 0; j < marks->subject_no; j++) {
-            scanf("%d", &(marks->table[i][j]));
-        }
-    }
-}
-
-// Function to print a table
-void print_table(_MARKS marks) {
-    printf("Table content:\n");
-    for (int i = 0; i < marks.student_no; i++) {
-        printf("%s ", marks.student[i]);
-        for (int j = 0; j < marks.subject_no; j++) {
-            printf("%d ", marks.table[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-// Function to compute the total marks for each student
-void get_total_marks(_MARKS* marks, _MARKS* total_marks) {
-    total_marks->student_no = marks->student_no;
-    total_marks->subject_no = marks->subject_no + 1;
-    for (int i = 0; i < marks->student_no; i++) {
-        for (int j = 0; j < marks->subject_no; j++) {
-            if (j == marks->subject_no - 1) {
-                // Compute the total marks for the student
-                int total = 0;
-                for (int k = 0; k < marks->subject_no - 1; k++) {
-                    total += marks->table[i][k];
-                }
-                total_marks->table[i][j] = total;
-            } else {
-                total_marks->table[i][j] = marks->table[i][j];
-            }
-        }
-    }
-}
-
-int main() {
-    _MARKS marks;
-    _MARKS total_marks;
-
-    // Read the table
-    read_table(&marks);
-
-    // Compute the total marks table
-    get_total_marks(&marks, &total_marks);
-
-    // Print the input table
-    printf("Input Table:\n");
-    print_table(marks);
-
-    // Print the output table
-    printf("Output Table:\n");
-    print_table(total_marks);
-
-    // Deallocate memory for the tables
-    for (int i = 0; i < marks.student_no; i++) {
-        free(marks.table[i]);
-        free(total_marks.table[i]);
-    }
-    free(marks.table);
-    free(total_marks.table);
-
-    return 0;
-}
-        </p>
-    </body>
+<br>int main() {
+ <br>   _MARKS marks;
+ <br>   _MARKS total_marks;
+<br>
+  <br>  // Read the table
+ <br>   read_table(&marks);
+<br>
+  <br>  // Compute the total marks table
+ <br>   get_total_marks(&marks, &total_marks);
+<br>
+  <br>  // Print the input table
+ <br>   printf("Input Table:\n");
+ <br>   print_table(marks);
+<br>
+ <br>   // Print the output table
+ <br>   printf("Output Table:\n");
+  <br>  print_table(total_marks);
+<br>
+ <br>   // Deallocate memory for the tables
+ <br>   for (int i = 0; i < marks.student_no; i++) {
+  <br>      free(marks.table[i]);
+  <br>      free(total_marks.table[i]);
+   <br> }
+  <br>  free(marks.table);
+  <br>  free(total_marks.table);
+<br>
+  <br>  return 0;
+<br>}    </p>
+            </body>
 </html>
